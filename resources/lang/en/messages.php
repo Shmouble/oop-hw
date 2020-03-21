@@ -1,0 +1,30 @@
+<?php
+
+return [
+    "languages" => "Languages",
+    "log_in" => "Log in",
+    "register" => "Register",
+    "hello" => "Hello",
+    "admin_stuff" => "Admin stuff",
+    "log_out" => "Log out",
+    "todo_list" => "Todo list",
+    "add" => "Add",
+    "purpose" => "Purpose",
+    "description" => "Description",
+    "category" => "Category",
+    "action" => "Action",
+    "edit" => "Edit",
+    "delete" => "Delete",
+    "edit_todo" => "Edit todo",
+    "add_todo" => "Add todo",
+    "close" => "Close",
+    "admins_page" => "Admin's page",
+    "users_data" => "Users' data",
+    "name" => "Name",
+    "email" => "E-mail",
+    "role" => "Role",
+    "admin" => "Admin",
+    "user" => "User",
+    "edit_users_data" => "Edit user's data",
+    "No access" => "No access"
+];
