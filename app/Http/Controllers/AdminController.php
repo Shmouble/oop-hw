@@ -11,7 +11,7 @@ class AdminController extends Controller
     {
         $this->authorize('getUsers', User::class);
 
-        $allUsers = User::paginate(5);
+        $allUsers = User::paginate(env("STRINGS_PER_PAGE", 5));
 
         return view('layouts.administration', compact('allUsers'));
     }

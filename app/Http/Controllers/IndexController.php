@@ -1,15 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: st
- * Date: 17.02.2020
- * Time: 20:33
- */
 
 namespace App\Http\Controllers;
 use App\Model\Todo;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class IndexController extends Controller
 {
@@ -21,11 +15,11 @@ class IndexController extends Controller
         {
             $todos = Todo::where('user_id', $user->id)
                 ->whereDate('execution_time', '>=', $borderTime)
-                ->paginate(5);
+                ->paginate(env("STRINGS_PER_PAGE", 5));
         }
         else
         {
-            $todos = Todo::paginate(5);
+            $todos = Todo::paginate(env("STRINGS_PER_PAGE", 5));
         }
 
         return view('layouts.index', compact('todos'));
@@ -88,7 +82,7 @@ class IndexController extends Controller
             'execution_time' => 'required'
         ]);
 
-        $user = auth()->user();
+        $user = $request -> user();
         $todo = new Todo();
 
         $data = $request->all();

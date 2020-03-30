@@ -21,16 +21,15 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
+        $result = $this->getRole() == 'admin' ? true : false;
+        return $result;
+    }
+
+    public function getRole()
+    {
         $userRole = Role::where('id', $this->role_id)->get();
         $userRole = $userRole[0]->name;
 
-        if($userRole == 'admin')
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return $userRole;
     }
 }

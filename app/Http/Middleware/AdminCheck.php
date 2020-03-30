@@ -10,10 +10,7 @@ class AdminCheck
 {
     public function handle($request, Closure $next)
     {
-        $userRole = Role::where('id', $request->user()->role_id)->get();
-        $userRole = $userRole[0]->name;
-
-        if($userRole != 'admin')
+        if(!$request->user()->isAdmin())
         {
             return abort(404);
         }

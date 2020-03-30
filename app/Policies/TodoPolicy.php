@@ -12,25 +12,13 @@ class TodoPolicy
 
     public function update(User $user, Todo $todo)
     {
-        if($user->id === $todo->user_id)
-        {
-            return true;
-        }
-        else
-        {
-            return abort(422);
-        }
+        $result = $user->id === $todo->user_id ? true : abort(422);
+        return $result;
     }
 
     public function delete(User $user, Todo $todo)
     {
-        if($user->id === $todo->user_id)
-        {
-            return true;
-        }
-        else
-        {
-            return abort(422);
-        }
+        $result = $user->id === $todo->user_id ? true : abort(422);
+        return $result;
     }
 }
