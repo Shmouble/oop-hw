@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use App\Model\Todo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class IndexController extends Controller
 {

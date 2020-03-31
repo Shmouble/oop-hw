@@ -32828,6 +32828,69 @@ $(document).ready(function () {
             }
         });
     });
+
+    // Для смены папки в менеджере
+    $('.changeFolder').on('click', function (e) {
+        e.preventDefault();
+
+        var folderName = $(this).data('name');
+        $.ajax({
+            url: '/filemanager/' + folderName,
+            method: 'get',
+            success: function success(data) {
+                document.location.reload(true);
+            },
+            error: function error(_error6) {
+                if (_error6.status === 422) {
+                    alert('No access');
+                }
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    });
+
+    // Для перехода на одну папку вверх в менеджере
+    $('.goUp').on('click', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: '/filemanager/go/up',
+            method: 'get',
+            success: function success(data) {
+                document.location.reload(true);
+            },
+            error: function error(_error7) {
+                if (_error7.status === 422) {
+                    alert('No access');
+                }
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    });
+
+    // Для загрузки файла
+    $('#fileUploadForm').on('submit', function (e) {
+        e.preventDefault();
+
+        var formData = new FormData($(this)[0]);
+        $.ajax({
+            url: '/filemanager/upload/file',
+            method: 'post',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function success(data) {
+                document.location.reload(true);
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    });
 });
 
 /***/ }),

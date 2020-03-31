@@ -1,7 +1,10 @@
     <div id="loginInfo">
         <a href="/"><h3>Todo</h3></a>
         {{__('messages.languages')}}: <a href="/locale/ru">Русский</a> | <a href="/locale/en">English</a>
+        <br>
+        <a href="/filemanager">File manager</a>
         <br><br>
+
         @auth
             {{__('messages.hello')}}, {{{Auth::user()->name}}} <br>
 
