@@ -70,3 +70,39 @@ Route::get('locale/{locale}', function ($locale){
     Session::put('locale', $locale);
     return redirect()->back();
 });
+
+// Для доступа к менеджеру файлов
+Route::get(
+    '/filemanager',
+    'FileManagerController@get'
+)->name('filemanager.get');
+
+// Для "путешествия" по папкам
+Route::get(
+    '/filemanager/{folderName}',
+    'FileManagerController@getFolder'
+)->name('filemanager.getFolder');
+
+// Для "путешествия" по папкам
+Route::get(
+    '/filemanager/go/up',
+    'FileManagerController@goUp'
+)->name('filemanager.goUp');
+
+// Для загрузки файла
+Route::post(
+    '/filemanager/upload/file',
+    'FileManagerController@upload'
+)->name('filemanager.upload');
+
+// Для создания папки
+Route::post(
+    '/filemanager/createfolder/{newFolderName}',
+    'FileManagerController@create'
+)->name('filemanager.create');
+
+// Для удаления файла
+Route::post(
+    '/filemanager/deletefile/{fileName}',
+    'FileManagerController@delete'
+)->name('filemanager.delete');

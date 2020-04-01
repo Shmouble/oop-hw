@@ -52,7 +52,6 @@ $(document).ready(function() {
         }
     });
 
-
     // Форма для добавления todo
     $('.addButton').on('click', function(e) {
         e.preventDefault();
@@ -185,6 +184,120 @@ $(document).ready(function() {
                 {
                     alert('No access');
                 }
+            },
+            headers:
+                {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+        });
+    });
+
+    // Для смены папки в менеджере
+    $('.changeFolder').on('click', function (e) {
+        e.preventDefault();
+
+        var folderName = $(this).data('name');
+        $.ajax({
+            url: '/filemanager/' + folderName,
+            method: 'get',
+            success: function (data)
+            {
+                document.location.reload(true);
+            },
+            error: function (error)
+            {
+                if (error.status === 422)
+                {
+                    alert('No access');
+                }
+            },
+            headers:
+                {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+        });
+    });
+
+    // Для перехода на одну папку вверх в менеджере
+    $('.goUp').on('click', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: '/filemanager/go/up',
+            method: 'get',
+            success: function (data)
+            {
+                document.location.reload(true);
+            },
+            error: function (error)
+            {
+                if (error.status === 422)
+                {
+                    alert('No access');
+                }
+            },
+            headers:
+                {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+        });
+    });
+
+    // Для загрузки файла
+    $('#fileUploadForm').on('submit', function (e) {
+        e.preventDefault();
+
+        var formData = new FormData($(this)[0]);
+        $.ajax({
+            url: '/filemanager/upload/file',
+            method: 'post',
+            data:  formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                document.location.reload(true);
+            },
+            headers:
+                {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+        });
+    });
+
+    // Для создания папки
+    $('#folderCreationForm').on('submit', function (e) {
+        e.preventDefault();
+
+        var newFolderName = $('[name="newFolderName"]').val();
+        $.ajax({
+            url: '/filemanager/createfolder/' + newFolderName,
+            method: 'post',
+            success: function (data) {
+                document.location.reload(true);
+            },
+            error:function(error){
+                console.log(error.status);
+            },
+            headers:
+                {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+        });
+    });
+
+    // Для удаления файла
+    $('.deleteFile').on('click', function (e) {
+        e.preventDefault();
+
+        var fileName = $(this).data('name');
+        $.ajax({
+            url: '/filemanager/deletefile/' + fileName,
+            method: 'post',
+            success: function (data) {
+                document.location.reload(true);
+            },
+            error:function(error){
+                console.log(error.status);
             },
             headers:
                 {

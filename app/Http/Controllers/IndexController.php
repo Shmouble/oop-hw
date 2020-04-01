@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Model\Todo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Config;
 
 class IndexController extends Controller
 {
@@ -15,11 +15,11 @@ class IndexController extends Controller
         {
             $todos = Todo::where('user_id', $user->id)
                 ->whereDate('execution_time', '>=', $borderTime)
-                ->paginate(env("STRINGS_PER_PAGE", 5));
+                ->paginate(Config::get('somedata.numberOfPages'));
         }
         else
         {
-            $todos = Todo::paginate(env("STRINGS_PER_PAGE", 5));
+            $todos = Todo::paginate(Config::get('somedata.numberOfPages'));
         }
 
         return view('layouts.index', compact('todos'));

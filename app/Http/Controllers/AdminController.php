@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Config;
 
 class AdminController extends Controller
 {
@@ -11,7 +12,7 @@ class AdminController extends Controller
     {
         $this->authorize('getUsers', User::class);
 
-        $allUsers = User::paginate(env("STRINGS_PER_PAGE", 5));
+        $allUsers = User::paginate(Config::get('somedata.numberOfPages'));
 
         return view('layouts.administration', compact('allUsers'));
     }
