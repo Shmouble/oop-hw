@@ -11,37 +11,19 @@ class UserPolicy
 
     public function getUsers(User $user)
     {
-        if($user->role_id == 1)
-        {
-            return true;
-        }
-        else
-        {
-            return abort(422);
-        }
+        $result = $user->role_id == 1 ? true : abort(422);
+        return $result;
     }
 
     public function updateUser(User $user)
     {
-        if($user->role_id == 1)
-        {
-            return true;
-        }
-        else
-        {
-            return abort(422);
-        }
+        $result = $user->role_id == 1 ? true : abort(422);
+        return $result;
     }
 
     public function deleteUser(User $user, User $userToDeletion)
     {
-        if(($user->role_id == 1) && ($user->id != $userToDeletion->id))
-        {
-            return true;
-        }
-        else
-        {
-            return abort(422);
-        }
+        $result = ($user->role_id == 1) && ($user->id != $userToDeletion->id) ? true : abort(422);
+        return $result;
     }
 }

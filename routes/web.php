@@ -57,7 +57,7 @@ Route::post(
 Route::delete(
     '/deleteuser/{id}',
     'AdminController@delete'
-)->name('index.delete')->middleware('auth.check')->middleware('admin.check');
+)->name('admin.delete')->middleware('auth.check')->middleware('admin.check');
 
 // Доступ к архиву
 Route::get(

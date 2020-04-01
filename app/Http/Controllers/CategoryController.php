@@ -20,9 +20,9 @@ class CategoryController
 
         $todos = Todo::where($matchThese)
             ->whereDate('execution_time', '>=', $borderTime)
-            ->paginate(5);
+            ->paginate(env("STRINGS_PER_PAGE", 5));
 
-        if(sizeof($todos) >= 1)
+        if(count($todos) >= 1)
         {
             return view('layouts.category', compact('todos'));
         }
