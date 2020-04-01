@@ -32891,6 +32891,46 @@ $(document).ready(function () {
             }
         });
     });
+
+    // Для создания папки
+    $('#folderCreationForm').on('submit', function (e) {
+        e.preventDefault();
+
+        var newFolderName = $('[name="newFolderName"]').val();
+        $.ajax({
+            url: '/filemanager/createfolder/' + newFolderName,
+            method: 'post',
+            success: function success(data) {
+                document.location.reload(true);
+            },
+            error: function error(_error8) {
+                console.log(_error8.status);
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    });
+
+    // Для удаления файла
+    $('.deleteFile').on('click', function (e) {
+        e.preventDefault();
+
+        var fileName = $(this).data('name');
+        $.ajax({
+            url: '/filemanager/deletefile/' + fileName,
+            method: 'post',
+            success: function success(data) {
+                document.location.reload(true);
+            },
+            error: function error(_error9) {
+                console.log(_error9.status);
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    });
 });
 
 /***/ }),

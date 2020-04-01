@@ -10,8 +10,7 @@ class FileManagerController extends Controller
 {
     public function get()
     {
-        if(!Session::has('FileManagerPath'))
-        {
+        if(!Session::has('FileManagerPath')){
             Session::put('FileManagerPath', 'public');
         }
 
@@ -27,8 +26,7 @@ class FileManagerController extends Controller
     {
         if(Session::has('FileManagerPath'))
         {
-            if (Storage::exists(Session::get('FileManagerPath') . "/" . $folderName))
-            {
+            if (Storage::disk('local') -> exists(Session::get('FileManagerPath') . "/" . $folderName)){
                 Session::put('FileManagerPath', Session::get('FileManagerPath') . "/" . $folderName);
                 $path = Session::get('FileManagerPath');
 
@@ -37,13 +35,11 @@ class FileManagerController extends Controller
 
                 return view('layouts.filemanager', compact('directoriesNames', 'filesNames', 'path'));
             }
-            else
-            {
+            else{
                 return abort(404);
             }
         }
-        else
-        {
+        else{
             return abort(404);
         }
     }
@@ -53,8 +49,7 @@ class FileManagerController extends Controller
     {
         if(Session::has('FileManagerPath'))
         {
-            if(Session::get('FileManagerPath') != 'public')
-            {
+            if(Session::get('FileManagerPath') != 'public'){
 
                 $path = explode("/", Session::get('FileManagerPath'));
 
@@ -75,8 +70,7 @@ class FileManagerController extends Controller
                 return view('layouts.filemanager', compact('directoriesNames', 'filesNames', 'path'));
             }
         }
-        else
-        {
+        else{
             return abort(404);
         }
     }
@@ -84,11 +78,41 @@ class FileManagerController extends Controller
     // Чтобы сохранять файл
     public function upload(Request $request)
     {
-        if($_FILES['file'] && $_FILES['file']['error'] == 0)
-        {
+        if($_FILES['file'] && $_FILES['file']['error'] == 0){
             Storage::put(Session::get('FileManagerPath') . "/", $request->file('file'));
         }
+    }
 
+    // Чтобы создать папку
+    public function create($newFolderName)
+    {
+        if(Session::has('FileManagerPath')){
+            if (!Storage::disk('local') -> exists(Session::get('FileManagerPath') . "/" . $newFolderName)){
+                Storage::disk('local') -> makeDirectory(Session::get('FileManagerPath') . "/" . $newFolderName);
+            }
+            else{
+                return abort(403);
+            }
+        }
+        else{
+            return abort(404);
+        }
+    }
+
+    // Чтобы удалить файл
+    public function delete($fileName)
+    {
+        if(Session::has('FileManagerPath')){
+            if(Storage::disk('local') -> exists(Session::get('FileManagerPath') . "/" . $fileName)){
+                Storage::disk('local') -> delete(Session::get('FileManagerPath') . "/" . $fileName);
+            }
+            else{
+                return abort(403);
+            }
+        }
+        else{
+            return abort(404);
+        }
     }
 
     // Получаем имена папок в текущей папке

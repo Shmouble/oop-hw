@@ -94,3 +94,15 @@ Route::post(
     '/filemanager/upload/file',
     'FileManagerController@upload'
 )->name('filemanager.upload');
+
+// Для создания папки
+Route::post(
+    '/filemanager/createfolder/{newFolderName}',
+    'FileManagerController@create'
+)->name('filemanager.create');
+
+// Для удаления файла
+Route::post(
+    '/filemanager/deletefile/{fileName}',
+    'FileManagerController@delete'
+)->name('filemanager.delete');

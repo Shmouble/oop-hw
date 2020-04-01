@@ -7,6 +7,13 @@
 
         <h3>Current directory: {{ $path }}/</h3>
 
+        <p>Create folder</p>
+        <form id="folderCreationForm">
+            <label>Folder name:</label>
+            <input name="newFolderName">
+            <button type="submit">Send</button>
+        </form>
+
         <h4>Directories:</h4>
         <a class="goUp">../</a>
         <br>
@@ -21,10 +28,11 @@
         <h4>Files:</h4>
         @if(count($filesNames) > 0)
             @foreach($filesNames as $file)
-                {{ $file  }}
+                <a data-name="{{ $file  }}" class="deleteFile">X</a> | {{ $file  }}
                 <br>
             @endforeach
         @endif
+
         <br>
         <form id="fileUploadForm">
             <label>Upload file:</label>

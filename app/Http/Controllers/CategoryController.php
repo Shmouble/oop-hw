@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Todo;
+use Illuminate\Support\Facades\Config;
 
 
 class CategoryController
@@ -20,7 +21,7 @@ class CategoryController
 
         $todos = Todo::where($matchThese)
             ->whereDate('execution_time', '>=', $borderTime)
-            ->paginate(env("STRINGS_PER_PAGE", 5));
+            ->paginate(Config::get('somedata.numberOfPages'));
 
         if(count($todos) >= 1)
         {
